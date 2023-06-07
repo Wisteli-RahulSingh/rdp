@@ -37,3 +37,16 @@ def parse_demographics(file): # json file
     flatten_data = flatten_demographics(data)
     df = pd.DataFrame.from_records([flatten_data])
     return df
+
+
+# parse problems
+def parse_problems(file): # json file
+    df = pd.json_normalize(file['patientProblems'], max_level=1)
+    df['i9'] = df['conceptMappings.I9'].apply(lambda x: {k: v['name'] for k, v in x.items()} if not pd.isnull(x) else x)
+    df[['conceptMappings.I9','conceptMappings.I9.name']] = df['i9'].apply(lambda x: pd.Series(list(x.items())[0]) if isinstance(x, dict) else pd.Series([np.nan, np.nan]))
+    df['i10'] = df['conceptMappings.I10'].apply(lambda x: {k: v['name'] for k, v in x.items()} if not pd.isnull(x) else x)
+    df[['conceptMappings.I10','conceptMappings.I10.name']] = df['i10'].apply(lambda x: pd.Series(list(x.items())[0]) if isinstance(x, dict) else pd.Series([np.nan, np.nan]))
+    df['snm'] = df['conceptMappings.SNOMED'].apply(lambda x: {k: v['name'] for k, v in x.items()} if not pd.isnull(x) else x)
+    df[['conceptMappings.SNOMED','conceptMappings.SNOMED.name']] = df['snm'].apply(lambda x: pd.Series(list(x.items())[0]) if isinstance(x, dict) else pd.Series([np.nan, np.nan]))
+    df = df.drop(columns=['i9','i10','snm'])
+    return df
