@@ -12,6 +12,8 @@ df = pd.concat([df.drop('Data', axis=1), pd.json_normalize(df['Data'])], axis=1)
 
 # Check for existing columns before unpacking dictionary values
 new_cols = pd.DataFrame(df['Data'].tolist()).add_prefix('Data')
+
+
 df2 = df.drop('Data', axis=1).join(new_cols.loc[:, ~new_cols.columns.duplicated()])
 
 
