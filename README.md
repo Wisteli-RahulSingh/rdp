@@ -7,6 +7,9 @@ https://stackoverflow.com/questions/72397751/converting-keys-of-pandas-df-of-dic
 
 df = pd.concat([df.drop('Data', axis=1), df['Data'].apply(pd.Series)], axis=1)
 
+df = pd.concat([df.drop('Data', axis=1), pd.json_normalize(df['Data'])], axis=1)
+
+
 
 
 
