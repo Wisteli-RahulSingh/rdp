@@ -45,3 +45,9 @@ def parse_problems(file): # json file
     concept_mapping_cols = [col for col in df.columns if col.startswith("conceptMappings.")]
     df = df.explode(concept_mapping_cols)
     return df
+
+# parse notes
+def parse_notes(file): # json file
+    df = pd.json_normalize(n['notes'])
+    return df
+
