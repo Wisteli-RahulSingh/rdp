@@ -21,6 +21,8 @@ new_cols = json_normalize(df['Data']).add_prefix('Data')
 df2 = df.drop('Data', axis=1).join(new_cols)
 
 
+df_combined = pd.concat([df.drop('Data', axis=1), pd.json_normalize(df['Data'])], axis=1)
+
 
 
 
