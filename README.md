@@ -18,6 +18,8 @@ df2 = df.drop('Data', axis=1).join(new_cols.loc[:, ~new_cols.columns.duplicated(
 
 new_cols = json_normalize(df['Data']).add_prefix('Data')
 
+df2 = df.drop('Data', axis=1).join(new_cols)
+
 
 
 
