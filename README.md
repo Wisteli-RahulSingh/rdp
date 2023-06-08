@@ -24,6 +24,8 @@ df2 = df.drop('Data', axis=1).join(new_cols)
 df_combined = pd.concat([df.drop('Data', axis=1), pd.json_normalize(df['Data'])], axis=1)
 
 
+df_combined = pd.concat([df.drop('Data', axis=1), pd.DataFrame([{k: v for k, v in d.items()} for d in df['Data']])], axis=1)
+
 
 
 
